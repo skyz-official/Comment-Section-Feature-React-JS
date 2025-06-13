@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Comment Form</title>
+  <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <style>
+    body {
+      font-family: sans-serif;
+      text-align: center;
+      padding: 40px;
+    }
+
+    label, textarea {
+      display: block;
+      margin: 10px auto;
+      font-size: 18px;
+    }
+
+    textarea {
+      padding: 10px;
+      width: 300px;
+      height: 100px;
+      resize: none;
+    }
+
+    button {
+      margin-top: 10px;
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .output {
+      margin-top: 30px;
+      font-weight: bold;
+      white-space: pre-wrap;
+    }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script type="text/babel">
+
+    function CommentForm() {
+      const [comment, setComment] = React.useState('');
+      const [submitted, setSubmitted] = React.useState('');
+
+      function handleChange(e) {
+        setComment(e.target.value);
+      }
+
+      function handleSubmit(e) {
+        e.preventDefault();
+        setSubmitted(comment);
+        setComment('');
+      }
+
+      return (
+        <div>
+          <h2>Leave a Comment</h2>
+          <form onSubmit={handleSubmit}>
+            <label htmlFor="comment">Your Comment:</label>
+            <textarea
+              id="comment"
+              value={comment}
+              onChange={handleChange}
+              placeholder="Write something..."
+            />
+            <br />
+            <button type="submit">Submit</button>
+          </form>
+
+          {submitted && (
+            <div className="output">
+              <p>✅ You submitted:</p>
+              <p>{submitted}</p>
+            </div>
+          )}
+        </div>
+      );
+    }
+
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(<CommentForm />);
+    
+  </script>
+</body>
+</html>
